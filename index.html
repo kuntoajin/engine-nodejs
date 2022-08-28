@@ -1,8 +1,26 @@
 <div>
-    <button onclick="test()">generate</button>
+    <form id="myForm">
+        html: <input type="text" name="fname" id="htmlName"><br>
+        Last name: <input type="text" name="lname"><br><br>
+        <input type="button" onclick="test()" value="generate">
+        <!-- <button onclick="test()">generate</button> -->
+      </form>
 </div>
 <script>
-    function test() {
-        console.log('test')
+    async function test() {
+        var myForm = document.getElementById("myForm")
+        myForm.preventDefault()
+        var data = document.getElementById("htmlName").value
+        console.log(data)
+        await fetch('http://localhost:3000/api/generate', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({a: data, b: 'Textual content'})
+    })
+        .then(res => res.json())
+        .then((data) => console.log(data));
     }
 </script>
